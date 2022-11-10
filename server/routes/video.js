@@ -40,12 +40,25 @@ router.post('/uploadfiles', (req, res) => {
 router.post('/uploadVideo', (req, res) => {
 
   // 비디오 정보들을 저장한다.
-    const video = new Video(req.body)
+  const video = new Video(req.body)
 
-    video.save((err, doc) => {
-      if(err) return res.json({ seccess : false, err})
-      res.status(200).json({ success : true })
-    })
+  video.save((err, doc) => {
+    if(err) return res.json({ seccess : false, err})
+    res.status(200).json({ success : true})
+  })
+
+})
+
+router.get('/getVideos', (req, res) => {
+
+  // 비디오를 DB에서 가져와서 클라이언트에 보낸다.
+  Video.find()
+  .populate('writer')
+  .exec((err, videos) => {
+    if(err) return res.status(400).send(err);
+    res.status(200).json({ success : true, videos })
+  })
+
 })
 
 router.post('/thumbnail', (req, res) => {

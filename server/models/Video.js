@@ -5,17 +5,27 @@ const videoSchema = mongoose.Schema({
 
     writer : {
         type : Schema.Types.ObjectId,
+        ref:'User'
     },
     title : {
         type : String,
         maxlength : 50
     },
+    description : {
+        type : String
+    },
     category : {
-        type : String,
+        type : String
     },
     views : {
         type : Number,
         default : 0
+    },
+    privacy : {
+        type : Number
+    },
+    filePath : {
+        type : String
     },
     duration : {
         type : String,
@@ -24,7 +34,7 @@ const videoSchema = mongoose.Schema({
         type : String
     }
 
-}, { thimstamps : true})
+}, { timestamps : true})
 
 
 const Video = mongoose.model('Video', videoSchema);

@@ -14,10 +14,10 @@ const PrivacyOptions = [
 ]
 
 const categoryOptions = [
-    { vlaue :0, label : "Film & Animation"},
-    { vlaue :1, label : "Autos & Vehicles"},
-    { vlaue :2, label : "Music"},
-    { vlaue :3, label : "Pets & Animals"},
+    { value :0, label : "Film & Animation"},
+    { value :1, label : "Autos & Vehicles"},
+    { value :2, label : "Music"},
+    { value :3, label : "Pets & Animals"},
 ]
 
 function VideoUploadPage(props) {
@@ -60,12 +60,14 @@ function VideoUploadPage(props) {
                     }
 
                     setFilePath(response.data.url)
+                    setThumbnailPath(response.data.url)
 
                     Axios.post('/api/video/thumbnail', variable)
                         .then(response => {
                             if(response.data.success) {
                                 setDuration(response.data.fileDuration)
                                 setThumbnailPath(response.data.url)
+                                
                             } else {
                                 alert('썸네일 생성에 실패 했습니다.')
                             }
@@ -95,6 +97,7 @@ function VideoUploadPage(props) {
         Axios.post('/api/video/uploadVideo', variables)
             .then( response => {
                 if(response.data.success) {
+                    console.log('1111---',variables)
                     message.success('성공적으로 업로드를 했습니다.')
 
                     setTimeout(() => {
