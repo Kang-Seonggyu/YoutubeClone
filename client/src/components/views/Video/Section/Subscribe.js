@@ -18,7 +18,7 @@ function Subscribe (props) {
                 }
             })
             
-        let subscribeVariable = { userTo : props.userTo, userFrom : localStorage.getItem('userId') }
+        let subscribeVariable = { userTo : props.userTo, userFrom : props.userFrom }
 
         Axios.post('/api/subscribe/subscribed', )
             .then( response => {
@@ -29,15 +29,51 @@ function Subscribe (props) {
                 }
             })
     }, [])
+
+    const onSubscribe = () => {
+        
+        let subscribedVariable = {
+
+            userTo : props.userTo,
+            userFrom : props.userFrom
+
+        }
+        
+        // 이미 구독중이라면
+        if(Subscribed) {
+            Axios.post('/api/subscribe/unSubscribe', subscribedVariable)
+                .then(response => {
+                    if(response.data.success) {
+                        setSubscribeNumber(SubscribeNumber - 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('구독 취소 하는 데 실패 했습니다.')
+                    }
+                })
+        }
+        // 구독하지 않았다면
+        else {
+            Axios.post('/api/subscribe/subscribe', subscribedVariable)
+                .then(response => {
+                    if(response.data.success) {
+                        setSubscribeNumber(SubscribeNumber + 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('구독 하는 데 실패 했습니다.')
+                    }
+                })
+        }
+    }
+
     return(
         <div>
             <button 
                 style={{ 
-                    backgroundColor : `${Subscribed ? '#AAAAA' :'#CC0000' }`, 
+                    backgroundColor : `${Subscribed ? '#AAAAAA' :'#CC0000' }`, 
                     borderRadius : '4px', color : 'white', padding : '10px 16px',
                     fontWeight : '500', fontSize : '1rem', textTransform : 'uppercase'
                 }}
-                onClick
+                onClick={onSubscribe}
             >
                 {SubscribeNumber} {Subscribed ? 'Subscribed' : 'Subscribe' }
             </button>
