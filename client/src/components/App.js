@@ -5,7 +5,7 @@ import Auth from "../hoc/auth";
 import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
-import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage';
+import VideoUploadPage from './views/Video/VideoUploadPage';
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 import VideoDetailPage from './views/Video/VideoDetailPage';

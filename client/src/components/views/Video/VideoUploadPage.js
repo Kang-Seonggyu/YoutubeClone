@@ -97,12 +97,11 @@ function VideoUploadPage(props) {
         Axios.post('/api/video/uploadVideo', variables)
             .then( response => {
                 if(response.data.success) {
-                    console.log('1111---',variables)
                     message.success('성공적으로 업로드를 했습니다.')
 
                     setTimeout(() => {
                         props.history.push('/')
-                    }, 3000);
+                    }, 1000);
                     
                 } else { 
                     alert('비디오 업로드에 실패')
