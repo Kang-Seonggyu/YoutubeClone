@@ -3,6 +3,7 @@ import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import SideVideo from "./Section/SideVideo";
 import Subscribe from "./Section/Subscribe";
+import Comment from "./Section/Comment";
 
 function VideoDetailPage(props) {
 
@@ -10,6 +11,7 @@ function VideoDetailPage(props) {
     const variable = { videoId : videoId }
 
     const [VideoDetail, setVideoDetail] = useState([])
+    const [Comments, setComments] = useState([])
 
     useEffect(() => {
         Axios.post('/api/video/getVideoDetail', variable)
@@ -24,16 +26,19 @@ function VideoDetailPage(props) {
     }, [])
     
     if (VideoDetail.writer) {
+        
+        const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
+
         return (
 
         
             <Row gutter={[16, 16]}>
                 <Col lg={17} xs={24}>
                     <div style={{ width : '100%', padding : '3rem 4rem'}}>
-                        <video style={{ width : '100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} contorls />
+                        <video style={{ width : '100%', maxHeight : '650px'}} src={`http://localhost:5000/${VideoDetail.filePath}`} contorls='true'/>
                         
                         <List.Item
-                            actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>]}
+                            actions={[subscribeButton]}
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image} />}
@@ -41,7 +46,7 @@ function VideoDetailPage(props) {
                                 description={VideoDetail.description}
                             />
                         </List.Item>
-                        comment
+                        <Comment postId={videoId} />
     
                     </div>
                 </Col>

@@ -26,7 +26,7 @@ function SideVideo () {
             <div key={index} style={{display : 'flex', marginBottom : '1rem', padding : '0 2rem'}}>
                 
                 <div style={{ width : '45%', marginBottom : '1rem'}}>
-                    <a href>
+                    <a href={`/video/${video._id}`}>
                         <img style={{ width : '100%'}}  src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
                     </a>
                 </div>

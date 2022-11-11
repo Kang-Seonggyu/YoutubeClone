@@ -20,7 +20,7 @@ function Subscribe (props) {
             
         let subscribeVariable = { userTo : props.userTo, userFrom : props.userFrom }
 
-        Axios.post('/api/subscribe/subscribed', )
+        Axios.post('/api/subscribe/subscribed', subscribeVariable)
             .then( response => {
                 if(response.data.success) {
                     setSubscribed(response.data.subscribed)
