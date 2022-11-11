@@ -23,8 +23,22 @@ function VideoDetailPage(props) {
                     alert('비디오 정보 가져오기를 실패했습니다.')
                 }
             })
+
+        Axios.post('/api/comment/getComments', variable )
+            .then( response => {
+                if(response.data.success) {
+                    //console.log(response.data.comments)
+                    setComments(response.data.comments)
+                } else {
+                    alert('댓글 정보를 가져오는 것을 실패했습니다.')
+                }
+            }) 
     }, [])
     
+    const refreshFunction = (newComment) => {
+        setComments(Comments.concat(newComment))
+    }
+
     if (VideoDetail.writer) {
         
         const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
@@ -46,7 +60,7 @@ function VideoDetailPage(props) {
                                 description={VideoDetail.description}
                             />
                         </List.Item>
-                        <Comment postId={videoId} />
+                        <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId} />
     
                     </div>
                 </Col>

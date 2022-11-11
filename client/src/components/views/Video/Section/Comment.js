@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { TextArea, Button } from 'antd'
+import { Input, Button } from 'antd'
 import { useSelector } from 'react-redux';
+import SingleComment from "./SingleComment";
+
+const { TextArea } = Input;
+
 
 function Comment (props) {
 
@@ -20,15 +24,15 @@ function Comment (props) {
         const variables = {
             content: Comment,
             writer: user.userData._id,
-            postId: videoId
+            videoId: videoId
         }
 
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.result)
-                    // setComment("")
-                    // props.refreshFunction(response.data.result)
+                    setComment("") // 작성중이던 댓글 초기화
+                    props.refreshFunction(response.data.result)
                 } else {
                     alert('댓글을 저장하지 못했습니다')
                 }
@@ -41,24 +45,24 @@ function Comment (props) {
         <p> replies</p>
         <hr />
         {/* Comment Lists  */}
-        {/* {props.CommentLists && props.CommentLists.map((comment, index) => (
+        {props.commentLists && props.commentLists.map((comment, index) => (
             (!comment.responseTo &&
                 <React.Fragment>
                     <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-                    <ReplyComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
+                    {/*<ReplyComment commentLists={props.commentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction}/>*/}
                 </React.Fragment>
             )
-        ))} */}
+        ))}
 
 
 
         {/* Root Comment Form */}
         <form style={{ display: 'flex' }} onSubmit={onSubmit}>
-            <textArea
+            <TextArea
                 style={{ width: '100%', borderRadius: '5px' }}
                 onChange={handleChange}
                 value={Comment}
-                placeholder="write some comments"
+                placeholder="댓글을 입력하세요"
             />
             <br />
             <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
