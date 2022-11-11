@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Input, Button } from 'antd'
 import { useSelector } from 'react-redux';
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment";
 
 const { TextArea } = Input;
 
@@ -41,34 +42,34 @@ function Comment (props) {
 
     return (
         <div>
-        <br />
-        <p> replies</p>
-        <hr />
-        {/* Comment Lists  */}
-        {props.commentLists && props.commentLists.map((comment, index) => (
-            (!comment.responseTo &&
-                <React.Fragment>
-                    <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-                    {/*<ReplyComment commentLists={props.commentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction}/>*/}
-                </React.Fragment>
-            )
-        ))}
-
-
-
-        {/* Root Comment Form */}
-        <form style={{ display: 'flex' }} onSubmit={onSubmit}>
-            <TextArea
-                style={{ width: '100%', borderRadius: '5px' }}
-                onChange={handleChange}
-                value={Comment}
-                placeholder="댓글을 입력하세요"
-            />
             <br />
-            <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
-        </form>
+            <p> replies</p>
+            <hr />
+            {/* Comment Lists  */}
+            {props.commentLists && props.commentLists.map((comment, index) => (
+                (!comment.responseTo &&
+                    <React.Fragment>
+                        <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
+                        <ReplyComment commentLists={props.commentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction}/>
+                    </React.Fragment>
+                )
+            ))}
 
-    </div>
+
+
+            {/* Root Comment Form */}
+            <form style={{ display: 'flex' }}>
+                <TextArea
+                    style={{ width: '100%', borderRadius: '5px' }}
+                    onChange={handleChange}
+                    value={Comment}
+                    placeholder="댓글을 입력하세요"
+                />
+                <br />
+                <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
+            </form>
+
+        </div>
     )
 }
 
